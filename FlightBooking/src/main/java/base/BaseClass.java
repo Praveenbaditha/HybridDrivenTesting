@@ -24,6 +24,6 @@ public class BaseClass {
 	@AfterClass
 	public void closeBrowser()
 	{
-			//driver.quit();
+			driver.quit();
 	}
 }
