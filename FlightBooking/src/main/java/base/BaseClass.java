@@ -8,6 +8,8 @@ import org.openqa.selenium.chrome.ChromeDriver;
 import org.testng.annotations.AfterClass;
 import org.testng.annotations.BeforeClass;
 
+import utils.FileLib;
+
 
 public class BaseClass {
 	public static WebDriver driver=new ChromeDriver();
@@ -15,10 +17,10 @@ public class BaseClass {
 	@BeforeClass
 	public void openBrowser() throws IOException
 	{
-			//driver=new ChromeDriver();
-			driver.manage().window().maximize();
-			driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(5));
-		
+		FileLib f=new FileLib();
+		String url = f.readPropertyData("url");
+		driver.manage().window().maximize();
+		driver.get(url);
 	}
 	
 	@AfterClass

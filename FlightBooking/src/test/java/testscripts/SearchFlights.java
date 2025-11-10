@@ -8,6 +8,8 @@ import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
+import org.testng.Assert;
+import org.testng.Reporter;
 import org.testng.annotations.Listeners;
 import org.testng.annotations.Test;
 
@@ -27,15 +29,14 @@ public class SearchFlights extends BaseClass{
 	UtilityClass wait=new UtilityClass();
 	FileLib f=new FileLib();
 	 @Test()
-	 public void searchFlight() throws IOException {
-		 	String url = f.readPropertyData("url");
+	 public void searchFlight() throws IOException, InterruptedException {
 		 	String source = f.readPropertyData("source");
 		 	String destination=f.readPropertyData("destination");
-	        driver.get(url);
 	        PaytmHomePage home = new PaytmHomePage(driver);
 	        results = new PaytmFlightResultsPage(driver);
 	        wait.waitForElement(home.sourceInput);
 	        home.enterSourceCity(source);
+	        wait.waitForElement(home.destinationInput);
 	        home.enterDestinationCity(destination);
 	        home.chooseFirstDepartureDate();
 	        home.clickSearchFlights();
@@ -45,12 +46,12 @@ public class SearchFlights extends BaseClass{
 	  public void leastPrice() throws InterruptedException {
 	        wait.waitForTitle("Paytm");
 	        wait.waitForElement(results.flight1Name);
-	        System.out.println(
+	        Reporter.log(
 	            results.getFlight1Name() + " = " + results.getFlight1Price()
-	        );
-	        System.out.println(
+	        ,true);
+	        Reporter.log(
 	            results.getFlight2Name() + " = " + results.getFlight2Price()
-	        );
+	        ,true);
 	    }
 
 	    @Test(dependsOnMethods = "leastPrice")
@@ -66,6 +67,7 @@ public class SearchFlights extends BaseClass{
 	    public void navigateToInfrrd() throws InterruptedException {
 	        GooglePage google = new GooglePage(driver);
 	        google.search("infrrd.ai");
+	        System.out.println("Complete the captcha - I am not a Robot");
 	        wait.waitForTitle("infrrd.ai");
 	        wait.waitForElement(google.infrrdLink);
 	        google.clickInfrrdResult();

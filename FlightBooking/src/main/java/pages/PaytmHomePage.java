@@ -4,15 +4,11 @@ import org.openqa.selenium.*;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
 
+import utils.UtilityClass;
+
 public class PaytmHomePage {
-
-	 WebDriver driver;
-
-	    public PaytmHomePage(WebDriver driver) {
-	        this.driver = driver;
-	        PageFactory.initElements(driver, this);
-	    }
-
+	UtilityClass wait=new UtilityClass();
+	
 	    @FindBy(id = "from")
 	    public WebElement sourceInput;
 
@@ -35,15 +31,22 @@ public class PaytmHomePage {
 	    public WebElement flightSearchBtn;
 
 	    public void enterSourceCity(String city) {
+	    	
+	    	wait.waitForElement(sourceInput);
 	        sourceInput.click();
 	        citySearchBox.sendKeys(city);
+	        wait.waitForEle(firstSuggestedCity);
 	        firstSuggestedCity.click();
 	    }
 
 	    public void enterDestinationCity(String city) {
 	        destinationInput.click();
 	        citySearchBox.sendKeys(city);
+	        wait.waitForEle(firstAvailableDate);
 	        firstSuggestedCity.click();
+	    }
+	    public PaytmHomePage(WebDriver driver) {
+	        PageFactory.initElements(driver, this);
 	    }
 
 	    public void chooseFirstDepartureDate() {
