@@ -69,7 +69,10 @@ public class SearchFlights extends BaseClass{
 	        wait.waitForTitle("infrrd.ai");
 	        wait.waitForElement(google.infrrdLink);
 	        google.clickInfrrdResult();
-	        System.out.println(driver.getTitle());
+	        String actualTitle="Infrrd";
+	        String title = driver.getTitle();
+	        Assert.assertTrue(actualTitle.contains(title));
+	        System.out.println("Test cases all passed");
 	    }
 
 }
